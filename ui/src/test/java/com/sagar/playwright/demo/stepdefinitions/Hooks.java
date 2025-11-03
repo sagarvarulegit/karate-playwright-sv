@@ -2,7 +2,7 @@ package com.sagar.playwright.demo.stepdefinitions;
 
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.Page;
+import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Playwright;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -20,7 +20,8 @@ public class Hooks {
     @Before
     public void setUp() {
         playwright = Playwright.create();
-        browser = playwright.chromium().launch();
+        boolean headless = Boolean.parseBoolean(System.getProperty("headless", "true"));
+        browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(headless));
         BrowserContext context = browser.newContext();
         testContext.page = context.newPage();
     }

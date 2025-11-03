@@ -1,0 +1,17 @@
+name: "Test User"
+email_prefix: "testuser"
+email_domain: "@example.com"
+password: "password123"
+dob:
+  day: "1"
+  month: "January"
+  year: "2000"
+address:
+  first_name: "Test"
+  last_name: "User"
+  street: "123 Test Street"
+  country: "United States"
+  state: "California"
+  city: "Los Angeles"
+  zip: "90001"
+  phone: "1234567890"
