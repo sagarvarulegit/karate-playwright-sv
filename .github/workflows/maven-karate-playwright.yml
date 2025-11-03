@@ -1,0 +1,56 @@
+name: Run Karate and Playwright Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # --- Step 1: Checkout repository ---
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # --- Step 2: Set up Java 21 ---
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      # --- Step 3: Set up Node.js for Playwright ---
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # --- Step 4: Install Playwright Browsers and dependencies ---
+      - name: Install Playwright browsers
+        run: |
+          npx playwright install --with-deps
+
+      # --- Step 5: Build and Run Tests ---
+      - name: Build and test with Maven
+        run: mvn clean test -B
+
+      # --- Step 6: Upload Karate Reports (HTML) ---
+      - name: Upload Karate HTML Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: karate-html-report
+          path: target/karate-reports/**/*.html
+
+      # --- Step 7: Upload Playwright Results (if any) ---
+      - name: Upload Playwright Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: ui/test-results/
