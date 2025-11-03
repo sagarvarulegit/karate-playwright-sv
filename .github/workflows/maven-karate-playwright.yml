@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: karate-html-report
-          path: target/karate-reports/**/*.html
+          path: api/target/**/*.html
 
       # --- Step 7: Upload Playwright Results (if any) ---
       - name: Upload Playwright Artifacts
@@ -53,4 +53,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-results
-          path: ui/test-results/
+          path: ui/target/**/*.html
