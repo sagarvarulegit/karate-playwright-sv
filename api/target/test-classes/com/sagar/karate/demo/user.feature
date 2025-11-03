@@ -28,3 +28,35 @@ Feature: User API Tests
     # We can also just check if a field is present
     And match $.data.first_name == '#present'
     And match $.data.last_name == 'Weaver'
+
+  Scenario: 2. Get user 3
+    Given path '/users/3'
+    When method get
+    Then status 200
+    And match $.data.id == 3
+
+  Scenario: 3. Compare user schemas
+    * def userSchema = read('classpath:com/sagar/karate/demo/user-schema.json')
+
+    Given path '/users/2'
+    When method get
+    Then status 200
+    And match response == userSchema
+
+    * path '/users/3'
+    When method get
+    Then status 200
+    And match response == userSchema
+
+  Scenario: 4. Call user 2 twice and compare responses
+    Given path '/users/2'
+    When method get
+    Then status 200
+    * def response1 = response
+
+    * path '/users/2'
+    When method get
+    Then status 200
+    * def response2 = response
+
+    And match response1 == response2
