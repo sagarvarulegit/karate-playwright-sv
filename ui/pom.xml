@@ -13,7 +13,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
+        <java.version>21</java.version>
         <cucumber.version>7.14.0</cucumber.version>
     </properties>
 
@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.microsoft.playwright</groupId>
             <artifactId>playwright</artifactId>
-            <version>1.40.0</version>
+            <version>1.55.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -38,6 +38,12 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite-api</artifactId>
+            <version>1.9.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
             <version>1.9.0</version>
             <scope>test</scope>
         </dependency>
@@ -59,6 +65,12 @@
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>2.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -66,7 +78,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.11.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -75,11 +87,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M7</version>
+                <version>3.2.2</version>
                 <configuration>
-                    <includes>
-                        <include>**/RunCucumberTest.java</include>
-                    </includes>
+                    <!-- Parallel execution configuration -->
+                    <parallel>methods</parallel>
+                    <threadCount>3</threadCount>
+                    <perCoreThreadCount>false</perCoreThreadCount>
+                    <properties>
+                        <configurationParameters>
+                            cucumber.execution.parallel.enabled=true
+                            cucumber.execution.parallel.config.strategy=fixed
+                            cucumber.execution.parallel.config.fixed.parallelism=3
+                            cucumber.plugin=pretty, html:target/cucumber-report.html, json:target/cucumber.json
+                        </configurationParameters>
+                    </properties>
                 </configuration>
             </plugin>
         </plugins>

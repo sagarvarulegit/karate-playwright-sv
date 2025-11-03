@@ -1,5 +1,0 @@
-com/sagar/playwright/demo/pages/HomePage.class
-com/sagar/playwright/demo/stepdefinitions/TestContext.class
-com/sagar/playwright/demo/stepdefinitions/Hooks.class
-com/sagar/playwright/demo/stepdefinitions/HomePageSteps.class
-com/sagar/playwright/demo/runner/RunCucumberTest.class
