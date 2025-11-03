@@ -39,6 +39,7 @@ public class RegistrationPageSteps {
     public void iEnterMyNameAndEmailAddress() {
         String name = testData.getName();
         String emailAddress = testData.getEmail_prefix() + System.currentTimeMillis() + testData.getEmail_domain();
+        testContext.registeredEmail = emailAddress; // Store for later use
         loginPage.enterNameAndEmail(name, emailAddress);
         loginPage.clickSignup();
     }
@@ -46,7 +47,9 @@ public class RegistrationPageSteps {
     @When("I fill in the registration form")
     public void iFillInTheRegistrationForm() {
         registrationPage.selectTitle();
-        registrationPage.enterPassword(testData.getPassword());
+        String password = testData.getPassword();
+        testContext.registeredPassword = password; // Store for later use
+        registrationPage.enterPassword(password);
         registrationPage.selectDateOfBirth(
                 testData.getDob().getDay(),
                 testData.getDob().getMonth(),
@@ -72,6 +75,11 @@ public class RegistrationPageSteps {
     @Then("I should see a confirmation message")
     public void iShouldSeeAConfirmationMessage() {
         assertEquals("ACCOUNT CREATED!".toLowerCase(), registrationPage.getAccountCreatedTitle().toLowerCase());
+    }
+    
+    @When("I click continue button")
+    public void iClickContinueButton() {
+        registrationPage.clickContinue();
     }
 
     private void loadProperties() {

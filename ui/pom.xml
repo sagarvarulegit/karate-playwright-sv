@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.microsoft.playwright</groupId>
             <artifactId>playwright</artifactId>
-            <version>1.40.0</version>
+            <version>1.55.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -89,6 +89,18 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.2</version>
                 <configuration>
+                    <!-- Parallel execution configuration -->
+                    <parallel>methods</parallel>
+                    <threadCount>3</threadCount>
+                    <perCoreThreadCount>false</perCoreThreadCount>
+                    <properties>
+                        <configurationParameters>
+                            cucumber.execution.parallel.enabled=true
+                            cucumber.execution.parallel.config.strategy=fixed
+                            cucumber.execution.parallel.config.fixed.parallelism=3
+                            cucumber.plugin=pretty, html:target/cucumber-report.html, json:target/cucumber.json
+                        </configurationParameters>
+                    </properties>
                 </configuration>
             </plugin>
         </plugins>

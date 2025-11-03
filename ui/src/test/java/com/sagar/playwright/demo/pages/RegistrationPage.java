@@ -21,6 +21,7 @@ public class RegistrationPage {
     private String mobileNumberInput = "input[data-qa='mobile_number']";
     private String createAccountButton = "button[data-qa='create-account']";
     private String accountCreatedTitle = "h2[data-qa='account-created']";
+    private String continueButton = "a[data-qa='continue-button']";
 
     public RegistrationPage(Page page) {
         this.page = page;
@@ -57,5 +58,9 @@ public class RegistrationPage {
 
     public String getAccountCreatedTitle() {
         return page.textContent(accountCreatedTitle);
+    }
+    
+    public void clickContinue() {
+        page.click(continueButton);
     }
 }
