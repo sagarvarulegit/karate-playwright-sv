@@ -1,6 +1,10 @@
 # Maven
 # Ignore build outputs
+*.jar
+
 /target/
+api/target/
+ui/target/
 *.class
 *.log
 
