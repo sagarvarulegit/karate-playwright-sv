@@ -1,0 +1,6 @@
+- page: 1
+  per_page: 6
+  expected_count: 6
+- page: 2
+  per_page: 2
+  expected_count: 2
